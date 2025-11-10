@@ -1,0 +1,84 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0.34
+    platform: linux/amd64
+    hostname: mysql
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=2
+    restart: never
+    volumes:
+      - ./data/mysqldir:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=default
+      - MYSQL_USER=dataeng
+      - MYSQL_PASSWORD=dataengineering_user
+      - MYSQL_ROOT_PASSWORD=dataengineering
+    healthcheck:
+      interval: 5s
+      retries: 5
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    networks:
+      - dldg
+
+  minio:
+    image: minio/minio:latest
+    platform: linux/amd64
+    hostname: minio
+    container_name: minio
+    volumes:
+      - ${PWD}/data/minio/:/opt/data
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio_admin
+    command: ["minio", "server", "--console-address", ":9001", "/opt/data"]
+    expose:
+      - 9000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - target: 9000
+        published: 9000
+        protocol: tcp
+        mode: host
+      - target: 9001
+        published: 9001
+        protocol: tcp
+        mode: host
+    networks:
+      - dldg
+
+  metastore:
+    image: apache/hive:3.1.3
+    platform: linux/amd64
+    hostname: metastore
+    container_name: metastore
+    volumes:
+      - ./data/jars/hadoop-aws-3.2.0.jar:/opt/hive/lib/hadoop-aws-3.2.0.jar
+      - ./data/jars/mysql-connector-java-8.0.23.jar:/opt/hive/lib/mysql-connector-java-8.0.23.jar
+      - ./data/jars/aws-java-sdk-bundle-1.11.375.jar:/opt/hive/lib/aws-java-sdk-bundle-1.11.375.jar
+      - ./conf:/opt/hive/conf
+    environment:
+      - SERVICE_NAME=metastore
+      - DB_DRIVER=mysql
+      - IS_RESUME="true"
+    expose:
+      - 9083
+    ports:
+      - target: 9083
+        published: 9083
+        protocol: tcp
+        mode: host
+    networks:
+      - dldg
+
+networks:
+  dldg:
+    name: dldg
