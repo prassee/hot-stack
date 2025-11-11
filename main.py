@@ -1,12 +1,16 @@
-def main():
-    print("Hello from hot-stack!")
+# %%
+import ibis
+
+con = ibis.trino.connect(
+    host="localhost", port=8080, database="hive", schema="analytics"
+)
 
 
-def add(a: int, b: int) -> int:
-    return a + b
+# %%
+con.list_tables()  # doctest: +SKIP
+# %%
+con.list_catalogs()  # doctest: +SKIP
 
-
-if __name__ == "__main__":
-    main()
-    add(34, 56)
-    print(f"{add(34, 56)}")
+# %%
+customers: ibis.Table = con.table("customers")
+customers.limit(5).execute()
