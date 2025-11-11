@@ -94,13 +94,20 @@
       "privileges": ["SELECT", "INSERT"]
     }
   ],
-  "sessionProperties": [
+  "catalog_session_properties": [
+    {
+      "catalog": ".*",
+      "property": ".*",
+      "allow": true
+    }
+  ],
+  "system_session_properties": [
     {
       "property": ".*",
       "allow": true
     }
   ],
-  "systemInformation": [
+  "system_information": [
     {
       "user": "admin",
       "allow": ["read", "write"]
@@ -110,7 +117,11 @@
       "allow": ["read", "write"]
     },
     {
-      "group": "data_engineers",
+      "user": "alice",
+      "allow": ["read"]
+    },
+    {
+      "user": "bob",
       "allow": ["read"]
     }
   ]
