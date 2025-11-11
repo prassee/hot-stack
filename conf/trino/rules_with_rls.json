@@ -1,0 +1,153 @@
+{
+  "catalogs": [
+    {
+      "user": "admin",
+      "catalog": ".*",
+      "allow": "all"
+    },
+    {
+      "user": "aks",
+      "catalog": ".*",
+      "allow": "all"
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "allow": "all"
+    },
+    {
+      "group": "analysts",
+      "catalog": "hive",
+      "allow": "read-only"
+    },
+    {
+      "group": "analysts",
+      "catalog": "tpch",
+      "allow": "read-only"
+    },
+    {
+      "user": "guest",
+      "catalog": "tpch",
+      "allow": "read-only"
+    }
+  ],
+  "schemas": [
+    {
+      "user": "admin",
+      "catalog": "hive",
+      "schema": ".*",
+      "owner": true
+    },
+    {
+      "user": "aks",
+      "catalog": "hive",
+      "schema": ".*",
+      "owner": true
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "schema": "base|managed_db|staging",
+      "owner": true
+    },
+    {
+      "group": "analysts",
+      "catalog": "hive",
+      "schema": "base",
+      "owner": false
+    }
+  ],
+  "tables": [
+    {
+      "user": "admin",
+      "catalog": "hive",
+      "schema": ".*",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP", "GRANT_SELECT"]
+    },
+    {
+      "user": "aks",
+      "catalog": "hive",
+      "schema": ".*",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP", "GRANT_SELECT"]
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "schema": "base|managed_db|staging",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP"]
+    },
+    {
+      "comment": "Analysts CANNOT access base tables directly - must use views",
+      "group": "analysts",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "employees|customer_data|documents|financial_records",
+      "privileges": []
+    },
+    {
+      "comment": "Analysts CAN access protected views with RLS and masking",
+      "group": "analysts",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "employees_summary|employees_masked|employees_protected|customers_protected|my_documents|recent_financial_records",
+      "privileges": ["SELECT"]
+    },
+    {
+      "comment": "Data engineers can access department-specific views",
+      "user": "alice",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "employees_engineering|all_financial_records",
+      "privileges": ["SELECT"]
+    },
+    {
+      "user": "bob",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "employees_engineering|products|customers",
+      "privileges": ["SELECT", "INSERT"]
+    },
+    {
+      "comment": "Allow all users to access their own document views",
+      "group": "analysts|data_engineers",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "my_documents",
+      "privileges": ["SELECT"]
+    }
+  ],
+  "catalog_session_properties": [
+    {
+      "catalog": ".*",
+      "property": ".*",
+      "allow": true
+    }
+  ],
+  "system_session_properties": [
+    {
+      "property": ".*",
+      "allow": true
+    }
+  ],
+  "system_information": [
+    {
+      "user": "admin",
+      "allow": ["read", "write"]
+    },
+    {
+      "user": "aks",
+      "allow": ["read", "write"]
+    },
+    {
+      "user": "alice",
+      "allow": ["read"]
+    },
+    {
+      "user": "bob",
+      "allow": ["read"]
+    }
+  ]
+}
