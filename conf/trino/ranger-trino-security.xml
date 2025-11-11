@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <!-- Ranger Admin Server URL -->
+  <property>
+    <name>ranger.plugin.trino.policy.rest.url</name>
+    <value>http://ranger-admin:6182</value>
+    <description>URL to Apache Ranger Admin server</description>
+  </property>
+
+  <!-- Cluster name for audit logs -->
+  <property>
+    <name>ranger.plugin.trino.access.cluster.name</name>
+    <value>trino-hot-stack</value>
+    <description>Name to identify this Trino cluster</description>
+  </property>
+
+  <!-- Service name in Ranger -->
+  <property>
+    <name>ranger.plugin.trino.service.name</name>
+    <value>trino-cluster</value>
+    <description>Name of Trino service in Ranger</description>
+  </property>
+
+  <!-- Use Ranger for user-group mapping -->
+  <property>
+    <name>ranger.plugin.trino.use.rangerGroups</name>
+    <value>false</value>
+    <description>Use Ranger for user-to-group mapping</description>
+  </property>
+
+  <property>
+    <name>ranger.plugin.trino.use.only.rangerGroups</name>
+    <value>false</value>
+    <description>Use only Ranger for user-to-group mapping</description>
+  </property>
+
+  <!-- Super users (bypass all policies) -->
+  <property>
+    <name>ranger.plugin.trino.super.users</name>
+    <value>admin,aks</value>
+    <description>Comma-separated list of super users</description>
+  </property>
+
+  <property>
+    <name>ranger.plugin.trino.super.groups</name>
+    <value>admins</value>
+    <description>Comma-separated list of super groups</description>
+  </property>
+
+  <!-- Policy refresh interval -->
+  <property>
+    <name>ranger.plugin.trino.policy.pollIntervalMs</name>
+    <value>30000</value>
+    <description>Policy refresh interval in milliseconds</description>
+  </property>
+
+  <!-- Policy cache directory -->
+  <property>
+    <name>ranger.plugin.trino.policy.cache.dir</name>
+    <value>/tmp/trino/ranger/policy-cache</value>
+    <description>Directory for caching policies</description>
+  </property>
+
+  <!-- Source file for policy (for fallback) -->
+  <property>
+    <name>ranger.plugin.trino.policy.source.impl</name>
+    <value>org.apache.ranger.admin.client.RangerAdminRESTClient</value>
+    <description>Policy source implementation</description>
+  </property>
+</configuration>

@@ -1,0 +1,117 @@
+{
+  "catalogs": [
+    {
+      "user": "admin",
+      "catalog": ".*",
+      "allow": "all"
+    },
+    {
+      "user": "aks",
+      "catalog": ".*",
+      "allow": "all"
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "allow": "all"
+    },
+    {
+      "group": "analysts",
+      "catalog": "hive",
+      "allow": "read-only"
+    },
+    {
+      "group": "analysts",
+      "catalog": "tpch",
+      "allow": "read-only"
+    },
+    {
+      "user": "guest",
+      "catalog": "tpch",
+      "allow": "read-only"
+    }
+  ],
+  "schemas": [
+    {
+      "user": "admin",
+      "catalog": "hive",
+      "schema": ".*",
+      "owner": true
+    },
+    {
+      "user": "aks",
+      "catalog": "hive",
+      "schema": ".*",
+      "owner": true
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "schema": "base|managed_db|staging",
+      "owner": true
+    },
+    {
+      "group": "analysts",
+      "catalog": "hive",
+      "schema": "base",
+      "owner": false
+    }
+  ],
+  "tables": [
+    {
+      "user": "admin",
+      "catalog": "hive",
+      "schema": ".*",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP", "GRANT_SELECT"]
+    },
+    {
+      "user": "aks",
+      "catalog": "hive",
+      "schema": ".*",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP", "GRANT_SELECT"]
+    },
+    {
+      "group": "data_engineers",
+      "catalog": "hive",
+      "schema": "base|managed_db|staging",
+      "table": ".*",
+      "privileges": ["SELECT", "INSERT", "DELETE", "UPDATE", "OWNERSHIP"]
+    },
+    {
+      "group": "analysts",
+      "catalog": "hive",
+      "schema": "base",
+      "table": ".*",
+      "privileges": ["SELECT"]
+    },
+    {
+      "user": "bob",
+      "catalog": "hive",
+      "schema": "base",
+      "table": "products|customers",
+      "privileges": ["SELECT", "INSERT"]
+    }
+  ],
+  "sessionProperties": [
+    {
+      "property": ".*",
+      "allow": true
+    }
+  ],
+  "systemInformation": [
+    {
+      "user": "admin",
+      "allow": ["read", "write"]
+    },
+    {
+      "user": "aks",
+      "allow": ["read", "write"]
+    },
+    {
+      "group": "data_engineers",
+      "allow": ["read"]
+    }
+  ]
+}

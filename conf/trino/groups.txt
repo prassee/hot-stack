@@ -1,0 +1,18 @@
+# User to Group Mapping
+# Format: username:group1,group2,group3
+
+# Administrators
+admin:admins,data_engineers
+aks:admins,data_engineers
+
+# Data Engineers
+alice:data_engineers
+bob:data_engineers
+
+# Analysts
+analyst:analysts
+john:analysts
+jane:analysts
+
+# Guests
+guest:guests
