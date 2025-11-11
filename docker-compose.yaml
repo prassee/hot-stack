@@ -79,6 +79,31 @@ services:
     networks:
       - dldg
 
+  trino:
+    image: trinodb/trino:476
+    platform: linux/amd64
+    hostname: trino
+    container_name: trino
+    volumes:
+      - ./conf/trino:/etc/trino
+    environment:
+      - TRINO_ENVIRONMENT=production
+      - AWS_ACCESS_KEY_ID=minio
+      - AWS_SECRET_ACCESS_KEY=minio_admin
+      - AWS_REGION=us-east-1
+    expose:
+      - 8080
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    depends_on:
+      - metastore
+      - minio
+    networks:
+      - dldg
+
 networks:
   dldg:
     name: dldg

@@ -1,0 +1,22 @@
+# Event listener configuration for Trino 476
+# This file configures event listeners for query logging and monitoring
+
+# Disable event listeners by default for simpler setup
+# Uncomment and configure as needed for production monitoring
+
+# Example: File-based event listener
+# event-listener.name=file
+# file.log-path=/var/log/trino/event-listener.log
+# file.log-format=JSON
+
+# Example: HTTP event listener for external monitoring systems
+# event-listener.name=http
+# http.log-url=http://monitoring-system:8080/trino-events
+# http.log-format=JSON
+# http.connect-timeout=10s
+# http.request-timeout=30s
+
+# Example: Multiple event listeners can be configured
+# event-listener.config-files=/etc/trino/event-listener-1.properties,/etc/trino/event-listener-2.properties
+
+# For now, use empty configuration to avoid startup issues

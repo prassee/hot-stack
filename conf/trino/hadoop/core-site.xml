@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- S3A FileSystem Configuration for MinIO -->
+    <property>
+        <name>fs.s3a.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+    </property>
+
+    <!-- MinIO endpoint configuration -->
+    <property>
+        <name>fs.s3a.endpoint</name>
+        <value>http://minio:9000</value>
+    </property>
+
+    <!-- MinIO credentials -->
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>minio</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>minio_admin</value>
+    </property>
+
+    <!-- Path style access for MinIO compatibility -->
+    <property>
+        <name>fs.s3a.path.style.access</name>
+        <value>true</value>
+    </property>
+
+    <!-- Disable SSL for local MinIO -->
+    <property>
+        <name>fs.s3a.connection.ssl.enabled</name>
+        <value>false</value>
+    </property>
+
+    <!-- Credential provider configuration for Trino 476 -->
+    <property>
+        <name>fs.s3a.aws.credentials.provider</name>
+        <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider</value>
+    </property>
+
+    <!-- Performance optimizations -->
+    <property>
+        <name>fs.s3a.connection.maximum</name>
+        <value>100</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.threads.max</name>
+        <value>20</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.threads.core</name>
+        <value>15</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.max.total.tasks</name>
+        <value>20</value>
+    </property>
+
+    <!-- Connection timeouts -->
+    <property>
+        <name>fs.s3a.connection.establish.timeout</name>
+        <value>10000</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.connection.timeout</name>
+        <value>60000</value>
+    </property>
+
+    <!-- Request timeout -->
+    <property>
+        <name>fs.s3a.request.timeout</name>
+        <value>60000</value>
+    </property>
+
+    <!-- Retry configuration -->
+    <property>
+        <name>fs.s3a.attempts.maximum</name>
+        <value>5</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.retry.throttle.limit</name>
+        <value>20</value>
+    </property>
+
+    <!-- Multipart upload configuration -->
+    <property>
+        <name>fs.s3a.multipart.size</name>
+        <value>104857600</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.multipart.threshold</name>
+        <value>209715200</value>
+    </property>
+
+    <!-- Block size -->
+    <property>
+        <name>fs.s3a.block.size</name>
+        <value>134217728</value>
+    </property>
+
+    <!-- Buffer configuration -->
+    <property>
+        <name>fs.s3a.buffer.dir</name>
+        <value>/tmp/s3a</value>
+    </property>
+
+    <!-- Fast upload with disk buffering -->
+    <property>
+        <name>fs.s3a.fast.upload</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.fast.upload.buffer</name>
+        <value>disk</value>
+    </property>
+
+    <!-- Input/Output settings -->
+    <property>
+        <name>fs.s3a.readahead.range</name>
+        <value>2097152</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.input.fadvise</name>
+        <value>sequential</value>
+    </property>
+
+    <!-- Listing configuration -->
+    <property>
+        <name>fs.s3a.list.version</name>
+        <value>2</value>
+    </property>
+
+    <!-- Disable signature verification for MinIO -->
+    <property>
+        <name>fs.s3a.signing-algorithm</name>
+        <value>S3SignerType</value>
+    </property>
+
+    <!-- Disable AWS SDK request handlers that might interfere -->
+    <property>
+        <name>fs.s3a.experimental.input.fadvise</name>
+        <value>sequential</value>
+    </property>
+
+    <!-- Enable S3A specific optimizations -->
+    <property>
+        <name>fs.s3a.committer.name</name>
+        <value>magic</value>
+    </property>
+
+    <!-- Hadoop security -->
+    <property>
+        <name>hadoop.security.authentication</name>
+        <value>simple</value>
+    </property>
+
+    <!-- Default filesystem -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>file:///</value>
+    </property>
+
+    <!-- Temporary directory -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hadoop</value>
+    </property>
+</configuration>
