@@ -79,6 +79,7 @@ services:
     networks:
       - dldg
 
+
   trino:
     image: trinodb/trino:476
     platform: linux/amd64
