@@ -86,6 +86,7 @@ services:
     hostname: trino
     container_name: trino
     volumes:
+      - ./conf/trino/certs:/etc/trino/certs
       - ./conf/trino:/etc/trino
     environment:
       - TRINO_ENVIRONMENT=production
@@ -99,9 +100,13 @@ services:
         published: 8080
         protocol: tcp
         mode: host
-    depends_on:
-      - metastore
-      - minio
+      - target: 8443
+        published: 8443
+        protocol: tcp
+        mode: host
+    # depends_on:
+    #   - metastore
+    #   - minio
     networks:
       - dldg
 

@@ -1,3 +1,5 @@
-package trino
+package trino.authz
 
-default allow = false
+default allow_query = false
+
+allow_query if input.context.identity.user == "trino"
