@@ -6,6 +6,16 @@ A modern data lakehouse stack for local development and testing, providing a com
 - **MinIO**: S3-compatible object storage
 - **MySQL 8.0.34**: Backend database for Hive Metastore
 
+## Required JARS 
+
+Download the following jars 
+
+  - aws-java-sdk-bundle-1.12.367.jar
+  - hadoop-aws-3.3.4.jar
+  - mysql-connector-java-8.0.23.jar
+
+data/jars/
+
 ## Architecture Overview
 
 ```
