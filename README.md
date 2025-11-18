@@ -19,49 +19,14 @@ Place them in:
   data/jars/
 
 ## Architecture Overview
+![Architecture Diagram](ChatGPT%20Image%20Nov%2018%2C%202025%2C%2008_10_10%20AM.png)
 
-
-```
-┌─────────────┐
-│   Trino     │ ← SQL Query Engine (HTTP: 8080)
-│    476      │   Web UI & CLI Access
-└──────┬──────┘
-        │
-        │
-┌───────▼────────┐
-│   Hive Metastore│
-│     3.1.3      │
-│ (Thrift:9083)  │
-└───────┬────────┘
-        │
-        │ (JDBC)
-┌───────▼────────┐
-│    MySQL       │
-│    8.0.34      │
-│ (JDBC:3306)    │
-└───────────────┘
-
-┌─────────────┐
-│   MinIO     │ ← S3-compatible Object Store
-│  (Latest)   │   API: 9000, Console: 9001
-└─────────────┘
-
-┌─────────────┐
-│   OPA       │ ← Policy Agent (REST: 8181)
-│ (Open Policy│   /policies volume
-│  Agent)     │
-└─────────────┘
-
-┌─────────────────────┐
-│   Spark Master      │ ← Spark UI: 8083, Master: 7077
-│   Spark Worker 1    │ ← Worker UI: 8084
-│ (Apache Spark 3.5.5)│
-└─────────────────────┘
-
-Network: dldg (Docker bridge)
-Volumes: ./data/{minio,mysqldir,jars}, ./conf, ./policies, ./pyspark
-```
-```
+The HOT Stack architecture shows the data flow between components:
+- **Trino** serves as the query engine, connecting to both Hive Metastore for metadata and MinIO for data storage
+- **Hive Metastore** manages table schemas and locations, using MySQL as its backend database
+- **MinIO** provides S3-compatible object storage for actual data files
+- **OPA** (Open Policy Agent) provides authorization policies through mounted volumes
+- **Apache Spark** can also connect to MinIO for data processing workloads
 
 ## Components
 
