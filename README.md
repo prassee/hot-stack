@@ -8,34 +8,59 @@ A modern data lakehouse stack for local development and testing, providing a com
 
 ## Required JARS 
 
-Download the following jars 
+Download the following jars:
 
   - aws-java-sdk-bundle-1.12.367.jar
   - hadoop-aws-3.3.4.jar
   - mysql-connector-java-8.0.23.jar
 
-data/jars/
+      ↓
+Place them in:
+  data/jars/
 
 ## Architecture Overview
 
+
 ```
 ┌─────────────┐
-│   Trino     │ ← SQL Query Engine (Port 8080)
-│  (Coord.)   │
+│   Trino     │ ← SQL Query Engine (HTTP: 8080)
+│    476      │   Web UI & CLI Access
 └──────┬──────┘
-       │
-       ├─────────────┐
-       │             │
-┌──────▼──────┐ ┌───▼────────┐
-│    Hive     │ │   MinIO    │
-│  Metastore  │ │  (S3 API)  │
-│ (Port 9083) │ │ (Port 9000)│
-└──────┬──────┘ └────────────┘
-       │
-┌──────▼──────┐
-│   MySQL     │
-│ (Port 3306) │
+        │
+        │
+┌───────▼────────┐
+│   Hive Metastore│
+│     3.1.3      │
+│ (Thrift:9083)  │
+└───────┬────────┘
+        │
+        │ (JDBC)
+┌───────▼────────┐
+│    MySQL       │
+│    8.0.34      │
+│ (JDBC:3306)    │
+└───────────────┘
+
+┌─────────────┐
+│   MinIO     │ ← S3-compatible Object Store
+│  (Latest)   │   API: 9000, Console: 9001
 └─────────────┘
+
+┌─────────────┐
+│   OPA       │ ← Policy Agent (REST: 8181)
+│ (Open Policy│   /policies volume
+│  Agent)     │
+└─────────────┘
+
+┌─────────────────────┐
+│   Spark Master      │ ← Spark UI: 8083, Master: 7077
+│   Spark Worker 1    │ ← Worker UI: 8084
+│ (Apache Spark 3.5.5)│
+└─────────────────────┘
+
+Network: dldg (Docker bridge)
+Volumes: ./data/{minio,mysqldir,jars}, ./conf, ./policies, ./pyspark
+```
 ```
 
 ## Components
