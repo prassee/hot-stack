@@ -2,7 +2,6 @@ import csv
 import io
 import os
 import random
-from datetime import datetime
 
 from faker import Faker
 from minio import Minio
@@ -79,6 +78,7 @@ string_buffer = io.StringIO()
 writer = csv.writer(string_buffer)
 writer.writerow(HEADERS)
 writer.writerows(data)
+
 
 # Get the CSV data as a string and then encode it to bytes
 csv_bytes = string_buffer.getvalue().encode("utf-8")

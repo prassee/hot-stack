@@ -12,13 +12,15 @@ conn = connect(
     port=8443,
     verify=False,  # <-- Add this line
 )
+
+# %%
+
 # %%
 cur = conn.cursor()
 cur.execute("select * from hive.analytics.customers")
 # %%
 cur.execute("select count(*) from hive.analytics.customers")
 cur.fetchall()
-
 # %%
 # cur.execute(
 #     """CREATE TABLE hive.analytics.customer_cc (
@@ -112,3 +114,4 @@ cur.execute(
 """
 )
 cur.fetchall()
+# %%

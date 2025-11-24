@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net" modified="2025-01-01T12:00:00.000Z" agent="ChatGPT" version="20.8.10">
+  <diagram id="architecture" name="Architecture">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Trino -->
+        <mxCell id="trino" value="Trino&#10;(476)&#10;SQL Query Engine&#10;HTTP:8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="400" y="100" width="160" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Hive Metastore -->
+        <mxCell id="metastore" value="Hive Metastore&#10;(3.1.3)&#10;Thrift:9083" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="160" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- MySQL -->
+        <mxCell id="mysql" value="MySQL&#10;8.0.34&#10;JDBC:3306" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="400" width="160" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- MinIO -->
+        <mxCell id="minio" value="MinIO&#10;(Latest)&#10;API:9000 Console:9001" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="260" width="160" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- OPA -->
+        <mxCell id="opa" value="OPA&#10;(Open Policy Agent)&#10;REST:8181" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="260" width="160" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Spark Master & Worker -->
+        <mxCell id="spark" value="Spark Master&#10;Spark Worker 1&#10;Apache Spark 3.5.5&#10;Master:7077 UI:8083/8084" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="540" width="200" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" edge="1" source="trino" target="metastore" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e2" edge="1" source="metastore" target="mysql" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e3" edge="1" source="trino" target="minio" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e4" edge="1" source="spark" target="minio" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5" edge="1" source="spark" target="metastore" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e6" edge="1" source="trino" target="opa" style="endArrow=block;strokeWidth=1.2;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
