@@ -172,6 +172,26 @@ services:
     networks:
       - dldg
 
+  
+  ranger-admin:
+    image: apache/ranger:2.7.0
+    depends_on:
+      - postgres
+    environment:
+      RANGER_DB_HOST: postgres
+      RANGER_DB_NAME: ranger
+      RANGER_DB_USER: ranger
+      RANGER_DB_PASSWORD: ranger
+    ports:
+      - 6080:6080
+    volumes:
+      - ranger_conf:/etc/ranger
+    healthcheck:
+      test: ["CMD-SHELL","curl -fsS http://localhost:6080 || exit 1"]
+      interval: 10s
+      retries: 12
+
+
 networks:
   dldg:
     name: dldg
