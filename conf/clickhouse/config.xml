@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  Basic ClickHouse server config for a local 2-node cluster using ZooKeeper.
+  - This file is intentionally conservative for development use.
+  - Replace the placeholder `REPLICA_NAME` in <macros> with a unique name per node
+    (for example: `clickhouse-1` and `clickhouse-2`). You can do this by creating
+    per-container override files (in `config.d/`) and mounting them separately.
+  - For production, review security settings, users, and Zookeeper ensemble.
+-->
+<clickhouse>
+  <logger>
+    <level>information</level>
+    <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+    <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+    <size>1000M</size>
+    <count>10</count>
+  </logger>
+
+  <http_port>8123</http_port>
+  <tcp_port>9000</tcp_port>
+  <listen_host>0.0.0.0</listen_host>
+
+  <path>/var/lib/clickhouse/</path>
+  <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+  <user_files_path>/var/lib/clickhouse/user_files/</user_files_path>
+
+  <!-- Include users configuration -->
+  <users_config>users.xml</users_config>
+
+  <!-- Zookeeper (single-node here) -->
+  <zookeeper>
+    <node index="1">
+      <host>zookeeper</host>
+      <port>2181</port>
+    </node>
+    <root>/clickhouse</root>
+  </zookeeper>
+
+  <!-- Cluster topology used by distributed tables. Update hosts if you change service names. -->
+  <remote_servers>
+    <local_cluster>
+      <shard>
+        <replica>
+          <host>clickhouse-1</host>
+          <port>9000</port>
+        </replica>
+        <replica>
+          <host>clickhouse-2</host>
+          <port>9000</port>
+        </replica>
+      </shard>
+    </local_cluster>
+  </remote_servers>
+
+  <!-- Macros used for replicated tables. Replace REPLICA_NAME per-node. -->
+  <macros>
+    <cluster>local_cluster</cluster>
+    <replica>REPLICA_NAME</replica>
+  </macros>
+
+  <!-- Recommended for development: allow starting without strict UID/GID mapping -->
+  <allow_remote_attached_storage>1</allow_remote_attached_storage>
+
+</clickhouse>

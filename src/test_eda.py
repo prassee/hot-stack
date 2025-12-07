@@ -4,17 +4,16 @@ df: pd.DataFrame = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
 
 
 def clean(a: pd.DataFrame):
-    print(f"{a}")
-    add(2, 3, 3)
+    add(23, 34)
     return None
 
 
 def doStuff(a: pd.DataFrame):
-    print(f"{len(a)}")
+    print(f"{a.isna()}")
     return None
 
 
-def normalize(a: pd.DataFrame) -> pd.DataFrame:
+def normalize(a: pd.DataFrame):
     return a.dropna()
 
 
@@ -24,6 +23,7 @@ def overlap(a: pd.DataFrame, b: pd.DataFrame):
 
 
 def clean_df(a: pd.DataFrame):
+    a.fillna()
     return a.fillna(0)
 
 

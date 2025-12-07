@@ -13,7 +13,27 @@ conn = connect(
     verify=False,  # <-- Add this line
 )
 
+
 # %%
+def underlap(a: str, b: str):
+    print(f"{a} , {b}")
+
+
+def overalap(a: int, b: int):
+    print(f"Overalap {a} - {b} {append_number(23,45)} ")
+    return a - b
+
+
+def append_number(a: int, b: int):
+    return a + b
+
+
+def overlap_df(df: pd.DataFrame):
+    df.filter()
+
+
+append_number(34, 45)
+overalap(34, 34)
 
 # %%
 cur = conn.cursor()
@@ -114,4 +134,24 @@ cur.execute(
 """
 )
 cur.fetchall()
+cur.describe
 # %%
+overalap(34, 34)
+cur.close()
+
+overalap(23, 45)
+append_number(23, 90)
+
+
+# %%
+def recursive_factorial(n: int) -> int | str:
+    if n < 0:
+        return "Error: Factorial is not defined for negative numbers."
+    if n == 0 or n == 1:
+        return 1
+    return n * recursive_factorial(n - 1)
+
+
+recursive_factorial(23)
+# %%
+append_number(23, 45)

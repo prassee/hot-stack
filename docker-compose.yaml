@@ -173,24 +173,71 @@ services:
       - dldg
 
   
-  ranger-admin:
-    image: apache/ranger:2.7.0
-    depends_on:
-      - postgres
-    environment:
-      RANGER_DB_HOST: postgres
-      RANGER_DB_NAME: ranger
-      RANGER_DB_USER: ranger
-      RANGER_DB_PASSWORD: ranger
-    ports:
-      - 6080:6080
-    volumes:
-      - ranger_conf:/etc/ranger
-    healthcheck:
-      test: ["CMD-SHELL","curl -fsS http://localhost:6080 || exit 1"]
-      interval: 10s
-      retries: 12
+  # ranger-admin:
+  #   image: apache/ranger:2.7.0
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     RANGER_DB_HOST: postgres
+  #     RANGER_DB_NAME: ranger
+  #     RANGER_DB_USER: ranger
+  #     RANGER_DB_PASSWORD: ranger
+  #   ports:
+  #     - 6080:6080
+  #   volumes:
+  #     - ranger_conf:/etc/ranger
+  #   healthcheck:
+  #     test: ["CMD-SHELL","curl -fsS http://localhost:6080 || exit 1"]
+  #     interval: 10s
+  #     retries: 12
 
+
+  clickhouse-zookeeper:
+    image: zookeeper:3.7
+    platform: linux/amd64
+    hostname: zookeeper
+    container_name: zookeeper
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zookeeper:2888:3888
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./data/zookeeper:/data
+    networks:
+      - dldg
+
+  clickhouse-1:
+    image: clickhouse/clickhouse-server:latest
+    platform: linux/amd64
+    hostname: clickhouse-1
+    container_name: clickhouse-1
+    volumes:
+      - ./conf/clickhouse:/etc/clickhouse-server
+      - ./data/clickhouse1:/var/lib/clickhouse
+    depends_on:
+      - clickhouse-zookeeper
+    ports:
+      - "9000:9000"
+      - "8123:8123"
+    networks:
+      - dldg
+
+  clickhouse-2:
+    image: clickhouse/clickhouse-server:latest
+    platform: linux/amd64
+    hostname: clickhouse-2
+    container_name: clickhouse-2
+    volumes:
+      - ./conf/clickhouse:/etc/clickhouse-server
+      - ./data/clickhouse2:/var/lib/clickhouse
+    depends_on:
+      - clickhouse-zookeeper
+    ports:
+      - "9001:9000"
+      - "8124:8123"
+    networks:
+      - dldg
 
 networks:
   dldg:

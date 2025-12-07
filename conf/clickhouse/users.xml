@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- Basic users configuration for local development. Do not use in production as-is. -->
+<yandex>
+  <users>
+    <default>
+      <password></password>
+      <networks>
+        <ip>::/0</ip>
+      </networks>
+      <profile>default</profile>
+      <quota>default</quota>
+    </default>
+  </users>
+
+  <profiles>
+    <default>
+      <max_memory_usage>10000000000</max_memory_usage>
+      <use_uncompressed_cache>0</use_uncompressed_cache>
+    </default>
+  </profiles>
+
+  <quotas>
+    <default/>
+  </quotas>
+</yandex>

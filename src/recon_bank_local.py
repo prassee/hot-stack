@@ -9,6 +9,7 @@ day_1_bank = "../recon/daily/bank_20251120.csv"
 # %%
 bank: pd.DataFrame = pd.read_csv(day_1_bank)
 app: pd.DataFrame = pd.read_csv(day_1_app)
+
 # if not is_backfill append recon/residual/app.csv to app dataframe
 if not is_backfill:
     residual_app: pd.DataFrame = pd.read_csv("../recon/residual/app.csv")
